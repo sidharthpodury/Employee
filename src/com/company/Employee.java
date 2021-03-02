@@ -68,6 +68,7 @@ public class Employee {
     private int hireLevel;
     private int currentLevel;
     public static void main(String[] args) {
+        //Main function
         Employee myObj = new Employee();
         Scanner input = new Scanner(System.in);
         System.out.println("What is your first name?");
