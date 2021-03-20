@@ -1,6 +1,8 @@
 package com.company;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Employee {
     public int getID() {
@@ -67,25 +69,84 @@ public class Employee {
     private String hireDate;
     private int hireLevel;
     private int currentLevel;
+
+
     public static void main(String[] args) {
         //Main function
-        Employee myObj = new Employee();
-        Scanner input = new Scanner(System.in);
-        System.out.println("What is your first name?");
-        myObj.setFirstName(input.nextLine());
-        System.out.println("What is your last name?");
-        myObj.setLastName(input.nextLine());
-        System.out.println("What is your date of birth?");
-        myObj.setDOB(input.nextLine());
-        System.out.println("What was your hire date?");
-        myObj.setHireDate(input.nextLine());
-        System.out.println("What is your ID?");
-        myObj.setID(input.nextInt());
-        System.out.println("What was your hire level?");
-        myObj.setHireLevel(input.nextInt());
-        System.out.println("What is your current level?");
-        myObj.setCurrentLevel(input.nextInt());
-        System.out.println(myObj.toString());
+
+        Company cmpny = new Company();
+        try {
+        String fileName = "C:\\Users\\sidha\\Downloads\\Company.csv";
+        File file = new File(fileName);
+        Scanner inputStream = new Scanner(file);
+        inputStream.useDelimiter("\r");
+        int counter = 0;
+        while(inputStream.hasNext()){
+            String data = inputStream.next();
+            counter++;
+            if (counter == 1)
+                continue;
+
+            String[] array = data.split(",");
+            cmpny.setCompanyID(array[0]);
+            cmpny.setCompanyName(array[1]);
+            cmpny.setAddress1(array[2]);
+            cmpny.setAddress2(array[3]);
+            cmpny.setCity(array[4]);
+            cmpny.setState(array[5]);
+            cmpny.setZipCode(Integer.parseInt(array[6]));
+            System.out.println(cmpny.toString());
+        }
+        inputStream.close();
+
+
+    }catch (FileNotFoundException e){
+
+        e.printStackTrace();
+    }
+
+ /*
+        Employee employee = new Employee();
+        String fileName = "C:\\Users\\sidha\\Downloads\\Employee.csv";
+        File file = new File(fileName);
+        try{
+            // -read from filePooped with Scanner class
+            Scanner inputStream = new Scanner(file);
+            // hashNext() loops line-by-line
+            int counter = 0;
+            while(inputStream.hasNext()){
+                String data = inputStream.next();
+                counter++;
+                if (counter == 1)
+                    continue;
+                //read single line, put in string
+
+                String[] array = data.split(",");
+                employee.setID(Integer.parseInt(array[0]));
+                employee.setLastName(array[1]);
+                employee.setFirstName(array[2]);
+                employee.setDOB(array[3]);
+                employee.setHireDate(array[4]);
+                employee.setHireLevel(Integer.parseInt(array[5]));
+                try {
+
+                    employee.setCurrentLevel(Integer.parseInt(array[6]));
+                } catch (NumberFormatException e) {
+                    System.out.println(e.toString());
+                    employee.setCurrentLevel(-1);
+                }
+                System.out.println(employee.toString());
+            }
+            // after loop, close scanner
+            inputStream.close();
+
+
+        }catch (FileNotFoundException e){
+
+            e.printStackTrace();
+        }
+
+*/
     }
 
     @Override
